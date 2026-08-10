@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="refresh" content="0; url=conversas.html">
+  <title>Chat · VagasIO</title>
+</head>
+<body>
+  <p>Redirecionando para o chat…</p>
+  <script>
+    const destino = new URL('conversas.html', window.location.href);
+    destino.search = window.location.search;
+    destino.hash = window.location.hash;
+    window.location.replace(destino.href);
+  </script>
+</body>
+</html>

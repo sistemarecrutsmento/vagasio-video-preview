@@ -1,0 +1,169 @@
+/* ============================================
+   PORTAL DA EMPRESA — CSS compartilhado
+   Padronizado com o visual do Admin (jul/2026)
+   ============================================ */
+
+:root {
+  --vinho: #722F37;
+  --vinho-escuro: #4A1F25;
+  --vinho-claro: #8B3A45;
+  --dourado: #C9A961;
+  --branco: #FFFFFF;
+  --preto: #1A1A1A;
+  --preto-suave: #2A2A2A;
+  --cinza-escuro: #3A3A3A;
+  --cinza-medio: #666;
+  --cinza-claro: #999;
+  --bg: #FAFAFA;
+  --borda: #E5E5E5;
+  --borda-escura: #444;
+  --verde: #2E7D32;
+  --amarelo: #F57C00;
+  --vermelho: #C62828;
+  --azul: #1976D2;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--preto); font-size: 14px; }
+
+/* === Layout principal (sidebar + main) === */
+.app { display: flex; min-height: 100vh; }
+
+/* === Sidebar vinho (igual admin) === */
+aside { width: 240px; background: var(--vinho); color: var(--branco); padding: 24px 0; flex-shrink: 0; display: flex; flex-direction: column; min-height: 100vh; }
+.aside-logo { padding: 0 24px 24px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 16px; }
+.aside-logo h1 { font-size: 20px; font-weight: 800; color: #fff; }
+.aside-logo h1 .dourado { color: #fff; }
+.aside-logo small { color: rgba(255,255,255,0.85); font-size: 12px; display: block; margin-top: 4px; }
+.nav-item { display: block; padding: 12px 24px; color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px; font-weight: 500; border-left: 3px solid transparent; cursor: pointer; transition: background 0.2s; }
+.nav-item:hover { background: rgba(255,255,255,0.1); color: #fff; }
+.nav-item.ativo { background: rgba(255,255,255,0.15); color: #fff; border-left-color: var(--dourado); }
+.nav-divisor { margin-top: 16px; padding: 8px 24px 4px; border-top: 1px solid rgba(255,255,255,0.15); font-size: 11px; font-weight: 700; letter-spacing: 1px; color: rgba(255,255,255,0.4); text-transform: uppercase; }
+.aside-user { margin-top: auto; padding: 16px 24px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; gap: 10px; }
+.aside-user-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--dourado); color: var(--preto); font-weight: 700; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+.aside-user-info { flex: 1; min-width: 0; }
+.aside-user-info .nome { font-size: 13px; font-weight: 600; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.aside-user-info .empresa { font-size: 11px; color: rgba(255,255,255,0.6); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.btn-logout { background: rgba(255,255,255,0.1); color: #fff; border: 0; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 14px; }
+.btn-logout:hover { background: rgba(255,255,255,0.2); }
+
+/* === Mobile menu === */
+.menu-toggle { display: none; position: fixed; top: 12px; left: 12px; z-index: 1100; background: var(--vinho); color: #fff; border: 0; border-radius: 8px; width: 40px; height: 40px; font-size: 20px; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+.menu-close { display: none; position: absolute; top: 12px; right: 12px; background: transparent; color: #fff; border: 0; font-size: 22px; cursor: pointer; padding: 4px 8px; }
+@media (max-width: 768px) {
+  .menu-toggle { display: block; }
+  .app.aside-aberto .menu-toggle { display: none; }
+  aside { position: fixed; top: 0; left: 0; height: 100vh; z-index: 1000; transform: translateX(-100%); transition: transform 0.25s ease; }
+  aside.aberto { transform: translateX(0); box-shadow: 4px 0 24px rgba(0,0,0,0.4); }
+  aside.aberto .menu-close { display: block; }
+  main { width: 100%; padding: 20px 16px; padding-top: 64px; }
+}
+
+/* === Main === */
+main { flex: 1; padding: 24px 32px; min-width: 0; }
+.page-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--borda); }
+.page-header h2 { font-size: 22px; font-weight: 700; color: var(--preto); }
+.page-header .sub { color: var(--cinza-medio); font-size: 13px; margin-top: 2px; }
+.page-actions { display: flex; gap: 8px; align-items: center; }
+
+/* === Cards / KPIs === */
+.kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 24px; }
+.kpi { background: var(--branco); border: 1px solid var(--borda); border-radius: 8px; padding: 18px 20px; }
+.kpi .label { font-size: 12px; color: var(--cinza-medio); text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px; }
+.kpi .valor { font-size: 28px; font-weight: 800; color: var(--vinho); margin-top: 6px; }
+.kpi .extra { font-size: 12px; color: var(--cinza-claro); margin-top: 4px; }
+.kpi.destaque { background: linear-gradient(135deg, var(--vinho) 0%, var(--vinho-claro) 100%); }
+.kpi.destaque .label { color: rgba(255,255,255,0.8); }
+.kpi.destaque .valor { color: var(--dourado); }
+
+/* === Cards de vaga === */
+.vagas-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; align-items: stretch; }
+.vaga-card { background: var(--branco); border: 1px solid var(--borda); border-radius: 8px; padding: 20px; cursor: pointer; transition: all 0.2s; text-decoration: none; color: inherit; display: flex; flex-direction: column; }
+.vaga-card:hover { border-color: var(--vinho); box-shadow: 0 4px 16px rgba(114,47,55,0.1); transform: translateY(-2px); }
+.vaga-card h3 { font-size: 16px; font-weight: 700; color: var(--preto); margin-bottom: 6px; }
+.vaga-card .local { font-size: 12px; color: var(--cinza-medio); margin-bottom: 12px; }
+.vaga-card .stats { display: flex; gap: 12px; padding-top: 12px; border-top: 1px solid var(--borda); }
+.vaga-card .stat { flex: 1; text-align: center; }
+.vaga-card .stat strong { display: block; font-size: 18px; color: var(--vinho); }
+.vaga-card .stat small { font-size: 11px; color: var(--cinza-claro); text-transform: uppercase; }
+
+/* === Tabela === */
+.tabela-wrap { background: var(--branco); border: 1px solid var(--borda); border-radius: 8px; overflow: hidden; }
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; padding: 12px 16px; font-size: 13px; }
+thead th { background: #f5f5f5; font-weight: 700; color: var(--preto); border-bottom: 1px solid var(--borda); font-size: 12px; text-transform: uppercase; letter-spacing: 0.3px; }
+tbody tr { border-bottom: 1px solid var(--borda); }
+tbody tr:last-child { border-bottom: 0; }
+tbody tr:hover { background: #fafafa; }
+
+/* === Botões === */
+.btn { padding: 10px 18px; border-radius: 6px; font-weight: 600; cursor: pointer; border: none; font-size: 14px; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
+.btn:hover { opacity: 0.9; }
+.btn-primary { background: var(--vinho); color: var(--branco); }
+.btn-primary:hover { background: var(--vinho-escuro); opacity: 1; }
+.btn-sec { background: var(--preto); color: var(--branco); }
+.btn-sec:hover { background: var(--preto-suave); opacity: 1; }
+.btn-perigo { background: var(--vermelho); color: var(--branco); }
+.btn-verde { background: var(--verde); color: var(--branco); }
+.btn-azul { background: var(--azul); color: var(--branco); }
+.btn-sm { padding: 6px 12px; font-size: 12px; }
+.btn-voltar { color: var(--cinza-medio); text-decoration: none; font-size: 13px; margin-bottom: 16px; display: inline-block; }
+.btn-voltar:hover { color: var(--vinho); }
+
+/* === Status pills === */
+.status-pill { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+.status-em_andamento { background: #E3F2FD; color: #1565C0; }
+.status-em_analise { background: #FFF3E0; color: #E65100; }
+.status-aprovado { background: #E8F5E9; color: #2E7D32; }
+.status-contratado { background: #2E7D32; color: #fff; }
+.status-reprovado, .status-rejeitado { background: #FFEBEE; color: #C62828; }
+
+/* === Etapa pills === */
+.etapa-pill { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 11px; font-weight: 600; background: #f0f0f0; color: var(--cinza-medio); }
+.etapa-pill.atual { background: var(--vinho); color: #fff; }
+.etapa-pill.feita { background: #E8F5E9; color: #2E7D32; }
+
+/* === Cards genéricos === */
+.card { background: var(--branco); border: 1px solid var(--borda); border-radius: 8px; padding: 20px; margin-bottom: 16px; }
+.card h3 { font-size: 16px; font-weight: 700; margin-bottom: 12px; color: var(--preto); }
+.card h4 { font-size: 14px; font-weight: 600; margin-bottom: 8px; color: var(--preto); }
+.empty { text-align: center; padding: 32px 16px; color: var(--cinza-claro); font-size: 13px; }
+
+/* === Inputs === */
+.form-group { margin-bottom: 16px; }
+.form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--preto); }
+.form-group input, .form-group textarea, .form-group select { width: 100%; padding: 10px 12px; border: 1px solid var(--borda); border-radius: 6px; font-size: 14px; font-family: inherit; background: var(--branco); }
+.form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--vinho); }
+textarea { min-height: 80px; resize: vertical; }
+
+/* === Alerts === */
+.alert { padding: 12px 16px; border-radius: 6px; margin-bottom: 16px; font-size: 13px; }
+.alert-info { background: #E3F2FD; color: #1565C0; border-left: 3px solid var(--azul); }
+.alert-warn { background: #FFF3E0; color: #E65100; border-left: 3px solid var(--amarelo); }
+.alert-erro { background: #FFEBEE; color: var(--vermelho); border: 1px solid #FCC; }
+.alert-sucesso { background: #E8F5E9; color: var(--verde); border-left: 3px solid var(--verde); }
+.alerta-info { padding: 12px 16px; border-radius: 6px; margin-bottom: 16px; font-size: 13px; }
+.badge-telespectador { padding: 12px 16px; background: #FFF3E0; color: #92400e; border-left: 3px solid var(--amarelo); border-radius: 6px; margin: 12px 0; font-size: 13px; }
+
+/* === Badges de notificação === */
+.badge-nao-lida { display: inline-block; background: var(--vermelho); color: #fff; border-radius: 999px; min-width: 20px; height: 20px; padding: 0 6px; font-size: 11px; font-weight: 700; text-align: center; line-height: 20px; }
+
+/* === Header da página de login (sem sidebar) === */
+.topo { background: var(--preto); color: #fff; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; }
+.topo h1 { font-size: 18px; font-weight: 800; }
+.topo a { color: #fff; text-decoration: none; font-size: 13px; }
+
+/* === Página de login (centralizada) === */
+.login-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--preto) 0%, var(--cinza-escuro) 100%); padding: 20px; }
+.login-card { background: var(--branco); padding: 40px; border-radius: 12px; max-width: 420px; width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,0.5); border-top: 4px solid var(--vinho); }
+.login-card h1 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+.login-card .sub { color: var(--cinza-medio); margin-bottom: 28px; font-size: 13px; }
+.login-card .btn-primary { margin-top: 4px; }
+
+/* === Utilitários === */
+.row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.text-muted { color: var(--cinza-medio); }
+.text-center { text-align: center; }
+.mt-2 { margin-top: 8px; } .mt-3 { margin-top: 12px; } .mt-4 { margin-top: 16px; }
+.mb-2 { margin-bottom: 8px; } .mb-3 { margin-bottom: 12px; } .mb-4 { margin-bottom: 16px; }
+.flex-1 { flex: 1; }

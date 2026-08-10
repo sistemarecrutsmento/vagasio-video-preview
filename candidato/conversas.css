@@ -1,0 +1,126 @@
+/* === Chat estilo WhatsApp (página de conversas do candidato) === */
+body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f5f0e8; color: #1a1a1a; }
+.chat-shell { display: flex; height: 100vh; max-width: 1100px; margin: 0 auto; background: white; box-shadow: 0 0 24px rgba(0,0,0,0.06); }
+
+/* === Lista de conversas (esquerda) === */
+.conv-list { width: 360px; flex-shrink: 0; border-right: 1px solid #e5e0d8; display: flex; flex-direction: column; background: #faf7f2; }
+.conv-list-head { padding: 16px 20px; border-bottom: 1px solid #e5e0d8; background: linear-gradient(135deg, #722F37, #8a3a44); color: white; }
+.conv-list-head h1 { margin: 0; font-size: 18px; }
+.conv-list-head p { margin: 4px 0 0; font-size: 12px; opacity: 0.85; }
+.conv-list-items { flex: 1; overflow-y: auto; }
+.conv-item { display: flex; gap: 12px; padding: 14px 16px; border-bottom: 1px solid #ede7dc; cursor: pointer; transition: background 0.15s; align-items: center; }
+.conv-item:hover { background: #f1ebe0; }
+.conv-item.active { background: #ede2cf; }
+.conv-item.unread { background: #fff7ed; }
+.conv-item.unread.active { background: #f6e7c8; }
+.conv-avatar { width: 44px; height: 44px; border-radius: 50%; background: #722F37; color: white; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; flex-shrink: 0; }
+.conv-info { flex: 1; min-width: 0; }
+.conv-info-top { display: flex; justify-content: space-between; align-items: baseline; }
+.conv-titulo { font-weight: 700; font-size: 14px; color: #1a1a1a; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.conv-horario { font-size: 11px; color: #888; flex-shrink: 0; margin-left: 8px; }
+.conv-preview { font-size: 13px; color: #666; margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.conv-item.unread .conv-preview { color: #1a1a1a; font-weight: 600; }
+.conv-badge { background: #d4a017; color: #1a1a1a; border-radius: 999px; padding: 2px 7px; font-size: 11px; font-weight: 700; margin-left: 6px; }
+.conv-vazio { padding: 40px 20px; text-align: center; color: #888; }
+.conv-vazio .icon { font-size: 48px; opacity: 0.3; margin-bottom: 12px; }
+.conv-vazio h3 { font-size: 16px; color: #555; margin: 8px 0; }
+.conv-vazio p { font-size: 13px; line-height: 1.5; }
+
+/* === Painel da conversa (direita) === */
+.conv-panel { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+.conv-panel-head { padding: 14px 20px; border-bottom: 1px solid #e5e0d8; display: flex; align-items: center; gap: 12px; background: white; }
+.conv-panel-head .av { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #722F37, #8a3a44); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; }
+.conv-panel-head h2 { margin: 0; font-size: 15px; }
+.conv-panel-head p { margin: 2px 0 0; font-size: 12px; color: #666; }
+.conv-panel-head a { margin-left: auto; color: #722F37; text-decoration: none; font-size: 13px; padding: 6px 10px; border-radius: 6px; }
+.conv-panel-head a:hover { background: #f1ebe0; }
+
+.conv-msgs { flex: 1; overflow-y: auto; padding: 20px; background: #faf7f2; }
+.conv-empty { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #888; text-align: center; padding: 40px; }
+.conv-empty .icon { font-size: 80px; opacity: 0.25; }
+.conv-empty h3 { font-size: 18px; color: #555; margin: 16px 0 8px; }
+.conv-empty p { font-size: 14px; line-height: 1.5; max-width: 320px; }
+
+.conv-input { padding: 12px 16px; border-top: 1px solid #e5e0d8; display: flex; gap: 8px; background: white; align-items: flex-end; }
+.conv-input textarea { flex: 1; border: 1px solid #d4cfc4; border-radius: 18px; padding: 8px 14px; font-size: 14px; font-family: inherit; resize: none; max-height: 100px; min-height: 36px; }
+.conv-input textarea:focus { outline: none; border-color: #722F37; }
+.conv-input button { background: #722F37; color: white; border: none; border-radius: 50%; width: 38px; height: 38px; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.conv-input button:disabled { background: #ccc; cursor: not-allowed; }
+/* botão de anexo (📎) — visual secundário, não chama tanta atenção quanto o enviar */
+#conv-anexo-btn { background: transparent !important; color: #722F37 !important; border: 1px solid #d4cfc4 !important; font-size: 18px !important; }
+#conv-anexo-btn:hover { background: #f5efe7 !important; border-color: #722F37 !important; }
+
+/* preview do arquivo anexado (aparece acima do input quando o candidato clica no 📎) */
+.conv-anexo-preview { display: flex; align-items: center; gap: 8px; padding: 8px 16px; background: #f5efe7; border-top: 1px solid #e5e0d8; font-size: 13px; color: #4a3a3a; }
+.conv-anexo-preview span { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.conv-anexo-preview button { background: transparent !important; color: #722F37 !important; border: none !important; font-size: 16px !important; width: 28px !important; height: 28px !important; padding: 0 !important; }
+
+/* === Bolhas de mensagem === */
+.ce-msg { display: flex; gap: 8px; margin-bottom: 12px; }
+.ce-msg.minha { flex-direction: row-reverse; }
+.ce-msg-av { width: 32px; height: 32px; border-radius: 50%; background: #722F37; color: white; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; align-self: flex-end; }
+.ce-msg.admin .ce-msg-av { background: #d4a017; color: #1a1a1a; }
+.ce-msg-balao { background: white; padding: 8px 12px; border-radius: 12px; max-width: 70%; box-shadow: 0 1px 2px rgba(0,0,0,0.06); }
+.ce-msg.minha .ce-msg-balao { background: #722F37; color: white; }
+.ce-msg-conteudo { font-size: 14px; line-height: 1.4; word-wrap: break-word; white-space: pre-wrap; }
+.ce-msg-meta { font-size: 10px; opacity: 0.7; margin-top: 4px; }
+.ce-msg.minha .ce-msg-meta { text-align: right; color: rgba(255,255,255,0.85); }
+.ce-vazio { text-align: center; color: #888; padding: 32px 16px; }
+.ce-vazio .icon { font-size: 36px; opacity: 0.4; margin-bottom: 8px; }
+
+/* === Botão "voltar" do head (escondido no desktop) === */
+.conv-panel-head .back { display: none; background: transparent; border: none; color: #1a1a1a; font-size: 28px; padding: 0 8px 0 0; cursor: pointer; line-height: 1; align-self: center; }
+.conv-panel-head .back:hover { color: #722F37; }
+
+/* === Mobile (estilo WhatsApp real: uma coluna de cada vez) === */
+@media (max-width: 768px) {
+  /* shell ocupa a tela toda, sem sombra lateral */
+  .chat-shell { max-width: 100%; box-shadow: none; }
+
+  /* lista e painel são camadas: uma de cada vez */
+  .conv-list { width: 100%; position: absolute; inset: 0; z-index: 1; background: #faf7f2; }
+  .conv-panel { width: 100%; position: absolute; inset: 0; z-index: 0; background: white; }
+  /* quando uma conversa está aberta, lista some e painel aparece */
+  .chat-shell.com-conversa .conv-list { display: none; }
+  .chat-shell.com-conversa .conv-panel { z-index: 2; }
+
+  /* head mais compacto */
+  .conv-list-head { padding: 12px 16px; }
+  .conv-list-head h1 { font-size: 16px; }
+  .conv-list-head p { font-size: 11px; }
+
+  /* item de conversa mais compacto */
+  .conv-item { padding: 10px 12px; gap: 10px; }
+  .conv-avatar { width: 40px; height: 40px; font-size: 13px; }
+  .conv-nome { font-size: 14px; }
+  .conv-preview { font-size: 12px; }
+  .conv-badge { font-size: 11px; min-width: 18px; height: 18px; }
+
+  /* head do painel: esconde o link "Ver inscrição" (não cabe) */
+  .conv-panel-head { padding: 8px 12px; gap: 8px; }
+  .conv-panel-head a { display: none; }
+  .conv-panel-head h2 { font-size: 14px; line-height: 1.2; }
+  .conv-panel-head p { font-size: 11px; margin-top: 1px; }
+  .conv-panel-head .av { width: 36px; height: 36px; font-size: 13px; }
+
+  /* botão "‹" só aparece no mobile */
+  .conv-panel-head .back { display: inline-flex; align-items: center; justify-content: center; }
+
+  /* mensagens: bolhas mais largas (85% no mobile) */
+  .ce-msg-balao { max-width: 85%; padding: 8px 10px; }
+  .ce-msg-av { width: 28px; height: 28px; font-size: 11px; }
+  .ce-msg-conteudo { font-size: 13px; }
+
+  /* input do chat */
+  .conv-input { padding: 8px; gap: 6px; }
+  .conv-input textarea { font-size: 14px; padding: 8px 10px; }
+  .conv-input button { padding: 8px 14px; font-size: 13px; }
+  /* preview do anexo no mobile */
+  .conv-anexo-preview { padding: 6px 12px; font-size: 12px; }
+}
+
+/* telas muito pequenas (até 380px) - mais compacto ainda */
+@media (max-width: 380px) {
+  .conv-panel-head h2 { font-size: 13px; }
+  .conv-panel-head p { display: none; } /* esconde empresa+etapa, só mostra título */
+}
